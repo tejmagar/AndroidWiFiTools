@@ -1,7 +1,7 @@
 # Android WiFi Tools
 Android library for finding connected devices on same WiFi network. It can provide IP Address, device name, MAC Address and vendor names.
 
-![alt "screenshot"](screenshot.png)
+<img src="screenshot.png" width="720" height="1560">
 
 ## Usuage
 Add the JitPack repository to your build file
