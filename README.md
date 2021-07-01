@@ -1,6 +1,8 @@
 # Android WiFi Tools
 Android library for finding connected devices on same WiFi network. It can provide IP Address, device name, MAC Address and vendor names.
 
+![alt "screenshot"](screenshot.png)
+
 ## Usuage
 Add the JitPack repository to your build file
 Add it in your root build.gradle at the end of repositories:
