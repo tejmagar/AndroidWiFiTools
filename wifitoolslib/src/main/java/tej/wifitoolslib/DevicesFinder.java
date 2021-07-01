@@ -104,6 +104,8 @@ public class DevicesFinder {
                 e.printStackTrace();
             }
 
+            isRunning = false;
+
             ((Activity)context).runOnUiThread(() -> {
                 deviceFindListener.onFailed("Unknown error");
             });
