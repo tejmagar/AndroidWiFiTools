@@ -79,7 +79,7 @@ public class DevicesFinder {
 
             for (int i=0; i<255; i++) {
                 /*
-                 *  Sample IP Address for current device
+                 * Sample IP Address for current device
                  * 192.168.1.45
                  */
 
