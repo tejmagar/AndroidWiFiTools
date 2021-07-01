@@ -1,5 +1,6 @@
 package tej.wifitoolslib;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class DevicesFinder {
 
     private String currentDeviceIpAddress;
 
-    private List<DeviceItem> reachableDevices = new ArrayList<>();
+    private final List<DeviceItem> reachableDevices = new ArrayList<>();
 
     public DevicesFinder(Context context, OnDeviceFindListener onDeviceFindListener) {
         this.context = context;
@@ -93,11 +94,17 @@ public class DevicesFinder {
                 boolean success = executorService.awaitTermination(10, TimeUnit.MINUTES);
 
                 if (success) {
-                    deviceFindListener.onComplete(reachableDevices);
+                    ((Activity)context).runOnUiThread(() -> {
+                        deviceFindListener.onComplete(reachableDevices);
+                    });
+
+                    return;
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            deviceFindListener.onFailed("Unknown error");
 
         }).start();
     }
@@ -124,7 +131,9 @@ public class DevicesFinder {
                             vendorName);
                     reachableDevices.add(deviceItem);
 
-                    deviceFindListener.onDeviceFound(deviceItem);
+                    ((Activity)context).runOnUiThread(() -> {
+                        deviceFindListener.onDeviceFound(deviceItem);
+                    });
                 }
             } catch (IOException e) {
                 e.printStackTrace();
