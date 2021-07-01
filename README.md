@@ -52,7 +52,7 @@ dependencies {
             }
         });
         
-        devicesFinder.start();
+devicesFinder.start();
 ```
 
 ### Set Timeout
