@@ -62,6 +62,7 @@ public class MacAddressInfo {
         return Constants.UNKNOWN;
     }
 
+
     public static String getCurrentDeviceMacAddress(String ipAddress) {
         try {
             InetAddress localIP = InetAddress.getByName(ipAddress);
