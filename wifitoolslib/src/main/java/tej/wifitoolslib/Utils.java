@@ -26,6 +26,6 @@ public class Utils {
             e.printStackTrace();
         }
 
-        return null;
+        return Constants.UNKNOWN;
     }
 }
