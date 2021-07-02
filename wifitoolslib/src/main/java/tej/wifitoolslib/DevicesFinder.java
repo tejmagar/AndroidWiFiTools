@@ -40,6 +40,10 @@ public class DevicesFinder {
         return this;
     }
 
+    public String getCurrentDeviceIpAddress() {
+        return currentDeviceIpAddress;
+    }
+
     public boolean isRunning() {
         return isRunning;
     }
