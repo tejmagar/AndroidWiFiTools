@@ -23,6 +23,11 @@ public class DevicesFinder {
 
     private String currentDeviceIpAddress;
 
+    // Error Codes
+    public static final int IP_ADDRESS_NULL = 0;
+    public static final int INVALID_TIMEOUT = 1;
+    public static final int UNKNOWN_ERROR = 2;
+
     private final List<DeviceItem> reachableDevices = new ArrayList<>();
 
     public DevicesFinder(Context context, OnDeviceFindListener onDeviceFindListener) {
@@ -51,7 +56,7 @@ public class DevicesFinder {
         reachableDevices.clear();
 
         if (timeout == 0) {
-            deviceFindListener.onFailed("Timeout cannot be zero.");
+            deviceFindListener.onFailed(INVALID_TIMEOUT);
             return;
         }
 
@@ -62,7 +67,7 @@ public class DevicesFinder {
 
         if (currentDeviceIpAddress == null) {
             isRunning = false;
-            deviceFindListener.onFailed("IP Address is null");
+            deviceFindListener.onFailed(IP_ADDRESS_NULL);
             return;
         }
 
@@ -96,9 +101,8 @@ public class DevicesFinder {
                 boolean success = executorService.awaitTermination(10, TimeUnit.MINUTES);
 
                 if (success) {
-                    ((Activity)context).runOnUiThread(() -> {
-                        deviceFindListener.onComplete(reachableDevices);
-                    });
+                    ((Activity)context).runOnUiThread(() ->
+                            deviceFindListener.onComplete(reachableDevices));
 
                     return;
                 }
@@ -108,9 +112,7 @@ public class DevicesFinder {
 
             isRunning = false;
 
-            ((Activity)context).runOnUiThread(() -> {
-                deviceFindListener.onFailed("Unknown error");
-            });
+            ((Activity)context).runOnUiThread(() -> deviceFindListener.onFailed(UNKNOWN_ERROR));
 
         }).start();
     }
@@ -137,9 +139,8 @@ public class DevicesFinder {
                             vendorName);
                     reachableDevices.add(deviceItem);
 
-                    ((Activity)context).runOnUiThread(() -> {
-                        deviceFindListener.onDeviceFound(deviceItem);
-                    });
+                    ((Activity)context).runOnUiThread(() ->
+                            deviceFindListener.onDeviceFound(deviceItem));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
