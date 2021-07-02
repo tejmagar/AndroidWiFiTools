@@ -90,6 +90,8 @@ public class DevicesFinder {
                 executorService.execute(new Ping(newIpAddress));
             }
 
+            executorService.shutdown();
+
             try {
                 boolean success = executorService.awaitTermination(10, TimeUnit.MINUTES);
 
