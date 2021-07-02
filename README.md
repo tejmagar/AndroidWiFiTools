@@ -3,7 +3,7 @@ Android library for finding connected devices on same WiFi network. It can provi
 
 <img src="screenshot.png" width="360" height="780">
 
-## Usuage
+## Usage
 Add the JitPack repository to your build file
 Add it in your root build.gradle at the end of repositories:
 
