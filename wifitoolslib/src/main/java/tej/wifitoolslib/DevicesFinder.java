@@ -100,6 +100,8 @@ public class DevicesFinder {
             try {
                 boolean success = executorService.awaitTermination(10, TimeUnit.MINUTES);
 
+                isRunning = false;
+
                 if (success) {
                     ((Activity)context).runOnUiThread(() ->
                             deviceFindListener.onComplete(reachableDevices));
