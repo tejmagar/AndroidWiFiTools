@@ -8,5 +8,5 @@ public interface OnDeviceFindListener {
     void onStart();
     void onDeviceFound(DeviceItem deviceItem);
     void onComplete(List<DeviceItem> deviceItems);
-    void onFailed(String message);
+    void onFailed(int errorCode);
 }
