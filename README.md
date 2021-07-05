@@ -71,7 +71,8 @@ devicesFinder.setTimeout(5000).start();
 String macAddress = MacAddressInfo.getMacAddressFromIp("192.168.1.1");
 ```
 Before running this code, make sure you have already run ```deviceFinder.start();``` method.
-returns device Mac Address. If not found, it will return "unknown" or ```Constants.UNKOWN```
+\
+Returns device Mac Address. If not found, it will return "unknown" or ```Constants.UNKOWN```
 
 ### Get current device IP Address
 ```
