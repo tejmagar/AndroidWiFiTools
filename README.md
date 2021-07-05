@@ -1,5 +1,7 @@
 # Android WiFi Tools
-Android library for finding connected devices on same WiFi network. It can provide IP Address, device name, MAC Address and vendor names. [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/tejmagar)
+Android library for finding connected devices on same WiFi network. It can provide IP Address, device name, MAC Address and vendor names.
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/tejmagar)
+
 <img src="screenshot.png" width="360" height="780">
 
 ## Usage
