@@ -1,5 +1,5 @@
 # Android WiFi Tools
-Android library for finding connected devices on same WiFi network. It can provide IP Address, device name, MAC Address and vendor names.
+Android library for finding connected devices on the same WiFi network. It can provide IP Addresses, device names, MAC Address and vendor names.
 \
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/tejmagar)
 
@@ -66,3 +66,30 @@ Increasing timeout value may give you better results.
 devicesFinder.setTimeout(5000).start();
 ```
 
+### Get Mac Address from IP Address
+```
+String macAddress = MacAddressInfo.getMacAddressFromIp("192.168.1.1");
+```
+Before running this code, make sure you have already run ```deviceFinder.start();``` method.
+returns device Mac Address. If not found, it will return "unknown" or ```Constants.UNKOWN```
+
+### Get current device IP Address
+```
+String ipAddress = devicesFinder.getCurrentDeviceIpAddress();
+```
+
+### Get current device Mac Address
+```
+String currentDeviceIpAddress = devicesFinder.getCurrentDeviceIpAddress();
+String currentDeviceMacAddress = MacAddressInfo.getCurrentDeviceMacAddress(currentDeviceIpAddress);
+```
+
+### Get vendor name from Mac Address
+```
+String vendorName = VendorInfo.getVendorName("94:17:00:3a:f9:09");
+```
+
+returns device Mac Address. If not found, it will return "unknown" or ```Constants.UNKNOWN```
+
+ ```VendorInfo.init(context);``` will be automatically called while starting the device finder. If not, make sure you have initialized it first.
+ 
