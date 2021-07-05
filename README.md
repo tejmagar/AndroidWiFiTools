@@ -49,7 +49,7 @@ dependencies {
             }
 
             @Override
-            public void onFailed(String message) {
+            public void onFailed(int errorCode) {
 
             }
         });
