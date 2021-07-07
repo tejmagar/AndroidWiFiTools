@@ -77,6 +77,8 @@ Returns device Mac Address. If not found, it will return "unknown" or ```Constan
 ### Get current device IP Address
 ```
 String ipAddress = devicesFinder.getCurrentDeviceIpAddress();
+// or
+String ipAddress = Utils.getIpAddress();
 ```
 
 ### Get current device Mac Address
