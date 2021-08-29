@@ -12,14 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tej.wifitoolslib.DevicesFinder;
-import tej.wifitoolslib.Utils;
 import tej.wifitoolslib.interfaces.OnDeviceFindListener;
 import tej.wifitoolslib.models.DeviceItem;
-import tej.wifitoolslib.vendors.VendorInfo;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> devices = new ArrayList<>();
+    private final List<String> devices = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailed(String message) {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            public void onFailed(int errorCode) {
+
             }
         });
 
