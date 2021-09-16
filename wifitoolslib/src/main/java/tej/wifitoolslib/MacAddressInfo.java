@@ -1,7 +1,10 @@
 package tej.wifitoolslib;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -33,12 +36,26 @@ public class MacAddressInfo {
         try {
             Process process = runtime.exec("ip n");
             process.waitFor();
+
+            int exitCode = process.exitValue();
+
+            if (exitCode != 0) {
+                System.out.println();
+                InputStream errorStream = process.getErrorStream();
+
+                int c = 0;
+                while ((c = errorStream.read()) != -1) {
+                    System.out.print((char)c);
+                }
+            }
+
             InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             String line, macAddress;
             String[] values;
             
             while ((line = bufferedReader.readLine()) != null) {
+                Log.e("line", line + "em");
                 values = line.split(" ");
 
                 if (values.length == 6) {

@@ -32,6 +32,18 @@ dependencies {
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
+### Update build.gradle(:app) for Android 11
+
+android {
+    ...
+    defaultConfig {
+        ...
+        //noinspection OldTargetApi
+        targetSdkVersion 29
+        ...
+        }
+}
+
 ### Find Connected Devices
 ```
  DevicesFinder devicesFinder = new DevicesFinder(this, new OnDeviceFindListener() {
