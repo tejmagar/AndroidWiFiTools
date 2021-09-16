@@ -33,7 +33,7 @@ dependencies {
 ```
 
 ### Update build.gradle(:app) for Android 11
-
+```
 android {
     ...
     defaultConfig {
@@ -43,6 +43,7 @@ android {
         ...
         }
 }
+```
 
 ### Find Connected Devices
 ```
