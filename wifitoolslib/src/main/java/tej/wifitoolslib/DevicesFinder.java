@@ -87,7 +87,7 @@ public class DevicesFinder {
             String newIpAddressPrefix;
             String newIpAddress;
 
-            for (int i=0; i<255; i++) {
+            for (int i = 0; i < 255; i++) {
                 /*
                  * Sample IP Address for current device
                  * 192.168.1.45
@@ -108,7 +108,7 @@ public class DevicesFinder {
                 isRunning = false;
 
                 if (success) {
-                    ((Activity)context).runOnUiThread(() ->
+                    ((Activity) context).runOnUiThread(() ->
                             deviceFindListener.onComplete(reachableDevices));
 
                     return;
@@ -119,7 +119,7 @@ public class DevicesFinder {
 
             isRunning = false;
 
-            ((Activity)context).runOnUiThread(() -> deviceFindListener.onFailed(UNKNOWN_ERROR));
+            ((Activity) context).runOnUiThread(() -> deviceFindListener.onFailed(UNKNOWN_ERROR));
 
         }).start();
     }
@@ -142,11 +142,14 @@ public class DevicesFinder {
                     String macAddress = MacAddressInfo.getMacAddressFromIp(ipAddress);
                     String vendorName = VendorInfo.getVendorName(macAddress);
 
-                    DeviceItem deviceItem = new DeviceItem(ipAddress, deviceName, macAddress,
-                            vendorName);
+                    DeviceItem deviceItem = new DeviceItem();
+                    deviceItem.setIpAddress(ipAddress);
+                    deviceItem.setDeviceName(deviceName);
+                    deviceItem.setMacAddress(macAddress);
+                    deviceItem.setVendorName(vendorName);
                     reachableDevices.add(deviceItem);
 
-                    ((Activity)context).runOnUiThread(() ->
+                    ((Activity) context).runOnUiThread(() ->
                             deviceFindListener.onDeviceFound(deviceItem));
                 }
             } catch (IOException e) {

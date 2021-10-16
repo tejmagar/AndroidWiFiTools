@@ -3,15 +3,24 @@ package tej.wifitoolslib.models;
 import androidx.annotation.NonNull;
 
 public class DeviceItem {
-    private final String ipAddress;
-    private final String deviceName;
-    private final String macAddress;
-    private final String vendorName;
+    private String ipAddress;
+    private String deviceName;
+    private String macAddress;
+    private String vendorName;
 
-    public DeviceItem(String ipAddress, String deviceName, String macAddress, String vendorName) {
+    public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
+    }
+
+    public void setMacAddress(String macAddress) {
         this.macAddress = macAddress;
+    }
+
+    public void setVendorName(String vendorName) {
         this.vendorName = vendorName;
     }
 
