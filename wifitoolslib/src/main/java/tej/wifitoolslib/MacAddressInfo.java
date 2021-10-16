@@ -40,7 +40,6 @@ public class MacAddressInfo {
             int exitCode = process.exitValue();
 
             if (exitCode != 0) {
-                System.out.println();
                 InputStream errorStream = process.getErrorStream();
 
                 int c = 0;
@@ -55,7 +54,6 @@ public class MacAddressInfo {
             String[] values;
             
             while ((line = bufferedReader.readLine()) != null) {
-                Log.e("line", line + "em");
                 values = line.split(" ");
 
                 if (values.length == 6) {
