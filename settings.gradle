@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AndroidWiFiTools"
 include ':app'
+include ':lib'
