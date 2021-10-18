@@ -1,5 +1,19 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "tej.wifitoolslib"
+                artifactId = "lib"
+                version = 'v1'
+            }
+        }
+    }
 }
 
 android {
