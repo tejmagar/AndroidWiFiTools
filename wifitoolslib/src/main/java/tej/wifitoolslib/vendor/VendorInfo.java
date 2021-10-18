@@ -52,7 +52,7 @@ public class VendorInfo {
         return jsonArray;
     }
 
-    public static String getMacAddress(Context context, String macAddress) {
+    public static String getVendorName(Context context, String macAddress) {
         try {
             JSONArray jsonArray = getJsonArray(context);
 

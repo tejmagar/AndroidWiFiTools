@@ -15,6 +15,8 @@ import tej.wifitoolslib.models.DeviceItem;
 
 public class DeviceFinder {
     public static final String UNKNOWN = "UnKnown";
+    public static final int ERROR_USER_STOPPED = 0;
+    public static final int UNKNOWN_ERROR = 1;
 
     private final Context context;
     private final OnDeviceFoundListener onDeviceFoundListener;
@@ -22,6 +24,7 @@ public class DeviceFinder {
     private ExecutorService executorService;
     private boolean isRunning = false;
     private int timeout = 500;
+    private boolean stopRequest = false;
 
     private final List<DeviceItem> reachableDevices = new ArrayList<>();
 
@@ -36,6 +39,7 @@ public class DeviceFinder {
 
     public void start() {
         isRunning = true;
+        stopRequest = false;
         startPing();
     }
 
@@ -44,12 +48,18 @@ public class DeviceFinder {
     }
 
     public void stop() {
-        executorService.shutdown();
+        stopRequest = true;
         executorService.shutdownNow();
+        isRunning = false;
     }
 
     private void startPing() {
+        if (!NetworkInfo.isWifiConnected(context)) {
+            return;
+        }
+
         executorService = Executors.newFixedThreadPool(255);
+        onDeviceFoundListener.onStart(this);
 
         String gatewayAddress = NetworkInfo.getGatewayAddress(context);
         int lastDotIndex = gatewayAddress.lastIndexOf(".");
@@ -58,9 +68,21 @@ public class DeviceFinder {
 
         String ipAddressToPing;
 
-        for (int i=0; i<255; i++) {
-            ipAddressToPing = ipPrefix + i;
-            executorService.execute(new Ping(ipAddressToPing));
+        try {
+            for (int i = 0; i < 255; i++) {
+                ipAddressToPing = ipPrefix + (i + 1);
+                executorService.execute(new Ping(ipAddressToPing));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (stopRequest) {
+                onDeviceFoundListener.onFailed(this, ERROR_USER_STOPPED);
+            } else {
+                onDeviceFoundListener.onFailed(this, UNKNOWN_ERROR);
+            }
+
+            return;
         }
 
         executorService.shutdown();
@@ -69,16 +91,23 @@ public class DeviceFinder {
             boolean wait = executorService.awaitTermination(10, TimeUnit.MINUTES);
 
             if (wait) {
-                MacAddressInfo.setMacAddress(reachableDevices);
+                MacAddressInfo.setMacAddress(context, reachableDevices);
                 onDeviceFoundListener.onFinished(this, reachableDevices);
             } else {
-                onDeviceFoundListener.onFailed(this);
+                onDeviceFoundListener.onFailed(this, UNKNOWN_ERROR);
             }
 
         } catch (InterruptedException e) {
-            onDeviceFoundListener.onFailed(this);
+            if (stopRequest) {
+                onDeviceFoundListener.onFailed(this, ERROR_USER_STOPPED);
+            } else {
+                onDeviceFoundListener.onFailed(this, UNKNOWN_ERROR);
+            }
+
             e.printStackTrace();
         }
+
+        isRunning = false;
     }
 
     class Ping implements Runnable {
@@ -93,6 +122,10 @@ public class DeviceFinder {
             try {
                 InetAddress inetAddress = InetAddress.getByName(ipAddress);
 
+                if (Thread.currentThread().isInterrupted()) {
+                    return;
+                }
+
                 if (inetAddress.isReachable(timeout)) {
                     DeviceItem deviceItem = new DeviceItem();
                     // Vendor name and mac address still not set
@@ -100,6 +133,7 @@ public class DeviceFinder {
                     deviceItem.setDeviceName(inetAddress.getHostName());
                     reachableDevices.add(deviceItem);
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

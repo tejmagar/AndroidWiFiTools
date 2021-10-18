@@ -7,7 +7,6 @@ import tej.wifitoolslib.models.DeviceItem;
 
 public interface OnDeviceFoundListener {
     void onStart(DeviceFinder deviceFinder);
-    void onProgress(DeviceFinder deviceFinder, int progress);
     void onFinished(DeviceFinder deviceFinder, List<DeviceItem> deviceItems);
-    void onFailed(DeviceFinder deviceFinder);
+    void onFailed(DeviceFinder deviceFinder, int errorCode);
 }
