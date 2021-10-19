@@ -50,6 +50,8 @@ public class DeviceFinder {
         isRunning = true;
         stopRequested = false;
 
+        reachableDevices.clear();
+
         new Thread(this::startPing).start();
     }
 
