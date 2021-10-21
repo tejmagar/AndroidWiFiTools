@@ -1,6 +1,5 @@
 package tej.wifitoolslib;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,7 +18,8 @@ import tej.wifitoolslib.models.DeviceItem;
 public class DeviceFinder {
     public static final String UNKNOWN = "UnKnown";
     public static final int ERROR_USER_STOPPED = 0;
-    public static final int UNKNOWN_ERROR = 1;
+    public static final int WIFI_NOT_CONNECTED = 2;
+    public static final int OTHERS = 3;
 
     private final Context context;
     private final OnDeviceFoundListener onDeviceFoundListener;
@@ -42,7 +42,6 @@ public class DeviceFinder {
 
     public DeviceFinder setTimeout(int timeout) {
         this.timeout = timeout;
-
         return this;
     }
 
@@ -62,6 +61,11 @@ public class DeviceFinder {
     public void stop() {
         stopRequested = true;
         executorService.shutdownNow();
+
+        if (isRunning) {
+            sendFailedEvent(ERROR_USER_STOPPED);
+        }
+
         isRunning = false;
     }
 
@@ -79,6 +83,7 @@ public class DeviceFinder {
 
     private void startPing() {
         if (!NetworkInfo.isWifiConnected(context)) {
+            sendFailedEvent(WIFI_NOT_CONNECTED);
             return;
         }
 
@@ -103,7 +108,7 @@ public class DeviceFinder {
             if (stopRequested) {
                 sendFailedEvent(ERROR_USER_STOPPED);
             } else {
-                sendFailedEvent(UNKNOWN_ERROR);
+                sendFailedEvent(OTHERS);
             }
 
             return;
@@ -118,14 +123,14 @@ public class DeviceFinder {
                 MacAddressInfo.setMacAddress(context, reachableDevices);
                 sendFinishedEvent(reachableDevices);
             } else {
-                sendFailedEvent(UNKNOWN_ERROR);
+                sendFailedEvent(OTHERS);
             }
 
         } catch (InterruptedException e) {
             if (stopRequested) {
                 sendFailedEvent(ERROR_USER_STOPPED);
             } else {
-                sendFailedEvent(UNKNOWN_ERROR);
+                sendFailedEvent(OTHERS);
             }
 
             e.printStackTrace();
