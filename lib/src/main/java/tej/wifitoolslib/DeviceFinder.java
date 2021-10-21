@@ -83,7 +83,7 @@ public class DeviceFinder {
 
     private void startPing() {
         if (!NetworkInfo.isWifiConnected(context)) {
-            isRunning = true;
+            isRunning = false;
             sendFailedEvent(WIFI_NOT_CONNECTED);
             return;
         }
