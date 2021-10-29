@@ -1,6 +1,7 @@
 package tej.wifitoolslib;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -81,6 +82,10 @@ public class DeviceFinder {
         handler.post(() -> onDeviceFoundListener.onFinished(this, deviceItems));
     }
 
+    private static boolean isBelowAndroidR() {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.R;
+    }
+
     private void startPing() {
         if (!NetworkInfo.isWifiConnected(context)) {
             isRunning = false;
@@ -121,7 +126,9 @@ public class DeviceFinder {
             boolean wait = executorService.awaitTermination(10, TimeUnit.MINUTES);
 
             if (wait) {
-                MacAddressInfo.setMacAddress(context, reachableDevices);
+                if (isBelowAndroidR()) {
+                    MacAddressInfo.setMacAddress(context, reachableDevices);
+                }
                 sendFinishedEvent(reachableDevices);
             } else {
                 sendFailedEvent(OTHERS);
