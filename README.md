@@ -5,7 +5,7 @@ Android library for finding connected devices on the same WiFi network. It can p
 
 <img src="screenshot.png" width="360" height="780">
 
-# Alternative 
+## Alternative [Use this instead]
 https://github.com/tejmagar/AndroidNetworkTools use this instead.
 
 ## Usage
