@@ -49,7 +49,7 @@ android {
 ```
 
 ### Find Connected Devices
-```
+```java
  DevicesFinder devicesFinder = new DevicesFinder(this, new OnDeviceFindListener() {
             @Override
             public void onStart() {
@@ -78,33 +78,33 @@ devicesFinder.start();
 ### Set Timeout
 Increasing timeout value may give you better results.
 
-```
+```java
 devicesFinder.setTimeout(5000).start();
 ```
 
 ### Get Mac Address from IP Address
-```
+```java
 String macAddress = MacAddressInfo.getMacAddressFromIp("192.168.1.1");
 ```
 Before running this code, make sure you have already run ```deviceFinder.start();``` method.
-\
+
 Returns device Mac Address. If not found, it will return "unknown" or ```Constants.UNKOWN```
 
 ### Get current device IP Address
-```
+```java
 String ipAddress = devicesFinder.getCurrentDeviceIpAddress();
 // or
 String ipAddress = Utils.getCurrentDeviceIpAddress();
 ```
 
 ### Get current device Mac Address
-```
+```java
 String currentDeviceIpAddress = devicesFinder.getCurrentDeviceIpAddress();
 String currentDeviceMacAddress = MacAddressInfo.getCurrentDeviceMacAddress(currentDeviceIpAddress);
 ```
 
 ### Get vendor name from Mac Address
-```
+```java
 String vendorName = VendorInfo.getVendorName("94:17:00:3a:f9:09");
 ```
 
