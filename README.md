@@ -12,7 +12,7 @@ https://github.com/tejmagar/AndroidNetworkTools use this instead.
 Add the JitPack repository to your build file
 Add it in your root build.gradle at the end of repositories:
 
-```
+```gradle
 allprojects {
 	repositories {
 		...
@@ -23,7 +23,7 @@ allprojects {
 
 ### Add the dependency
 
-```
+```gradle
 dependencies {
     implementation 'com.github.tejmagar:AndroidWiFiTools:1.0.2'
 }
@@ -31,12 +31,12 @@ dependencies {
 
 ### Add Permission
 
-```
+```xml
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
 ### Update build.gradle(:app) for Android 11
-```
+```gradle
 android {
     ...
     defaultConfig {
